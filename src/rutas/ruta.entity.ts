@@ -1,21 +1,17 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Rutas } from '../rutas/ruta.entity';
+import { Paquete } from '../paquetes/paquete.entity';
 
-@Entity('planes')
-export class Plan {
+@Entity('rutas')
+export class Ruta { 
   @PrimaryGeneratedColumn('uuid')
-  id?: string;
+  id!: string;
 
   @Column({ unique: true })
-  tipo?: string;
+  nombre!: string;
 
-  @Column('decimal', { precision: 8, scale: 2 })
-  costo?: number;
+  @Column()
+  codigo!: string;
 
-  @Column('decimal', { precision: 8, scale: 2 })
-  peso?: number;
-
-
-  @Column('decimal', { precision: 8, scale: 2 })
-  recargo?: number;
+  @OneToMany(() => Paquete, (paquete) => paquete.ruta)
+  paquetes!: Paquete[];
 }

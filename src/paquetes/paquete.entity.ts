@@ -1,23 +1,27 @@
-import { IsString, IsNumber, IsNotEmpty, IsPositive, IsEnum } from 'class-validator';
-import { TipoPaquete } from './paquete.entity'; // Puedes importar el enum desde tu entidad
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Ruta } from '../rutas/ruta.entity';
 
-export class CreatePaqueteDto {
-  @IsString()
-  @IsNotEmpty()
-  codigo?: string; 
+@Entity('paquetes')
+export class Paquete {
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
-  @IsString()
-  @IsNotEmpty()
-  destinatario?: string;
+  @Column({ unique: true })
+  codigo!: string;
 
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @IsPositive()
-  peso_kg?: number;
+  @Column()
+  destinatario!: string;
 
-  @IsEnum(TipoPaquete)
-  tipo: TipoPaquete;
+  @Column('decimal', { precision: 6, scale: 2 })
+  peso_kg!: number;
 
-  @IsString()
-  @IsNotEmpty()
-  rutaId?: string; 
+  @Column()
+  tipo!: string;
+
+  @Column({ default: 'En bodega' })
+  estado!: string;
+
+  // Relación: Muchos paquetes pertenecen a una sola Ruta
+  @ManyToOne(() => Ruta, (ruta) => ruta.paquetes, { onDelete: 'CASCADE' })
+  ruta!: Ruta;
 }

@@ -1,29 +1,27 @@
-import { IsString, IsNumber, IsNotEmpty, IsPositive, IsEnum,} from 'class-validator';
+import { IsString, IsNumber, IsOptional } from 'class-validator';
 
-export enum TipoPaquete {
-  NORMAL = 'NORMAL',
-  FRAGIL = 'FRÁGIL',
-  REFRIGERADO = 'REFRIGERADO'
-}
-
-export class CreatePlanDto {
+export class UpdatePaqueteDto {
+  @IsOptional()
   @IsString()
-    @IsNotEmpty()
-    codigo?: string;
-  
-  
-    @IsString()
-    @IsNotEmpty()
-    destinatario?: string;
-  
-    @IsNumber({ maxDecimalPlaces: 2 })
-    @IsPositive()
-    peso_kg?: number;
-  
-    @IsEnum(TipoPaquete)
-    tipo?: TipoPaquete;
-  
-    @IsString()
-    @IsNotEmpty()
-    rutaId?: string;
+  codigo?: string;
+
+  @IsOptional()
+  @IsString()
+  destinatario?: string; 
+
+  @IsOptional()
+  @IsNumber()
+  peso_kg?: number; 
+
+  @IsOptional() 
+  @IsString()
+  tipo?: string;
+
+  @IsOptional()
+  @IsString()
+  estado?: string;
+
+  @IsOptional()
+  @IsString()
+  rutaId?: string; 
 }
